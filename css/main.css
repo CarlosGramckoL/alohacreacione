@@ -156,7 +156,6 @@ body > section,
 .logo {
   width: 120px;
   height:80px;
-  background-image: url('logo-regular.png');
   background-size: contain;
 }
 
