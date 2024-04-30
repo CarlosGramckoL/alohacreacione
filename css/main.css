@@ -374,13 +374,22 @@ top: -8px;
   text-transform: capitalize;
 }
 
-.work-filter ul li a:hover,
-.work-filter ul li a.active {
+.work-filter ul li a:hover{
   background-color: #F2A0C6;
   border-radius: 6px;
   color: #fff;
   padding: 5px 17px;
+
 }
+
+.work-filter ul li a:active {
+  background-color: #ee559d;
+  border-radius: 6px;
+  color: #fff;
+  padding: 5px 17px;
+}
+
+
 
 .mix {
     display: none;
@@ -501,6 +510,7 @@ top: -8px;
   display: inline-block; /* Esto permite que el miembro ocupe solo el ancho necesario y esté centrado */
   text-align: center; /* Si el texto del miembro es largo, asegura que el texto se alinee a la izquierda */
   margin: 0 auto; /* Esto centrará horizontalmente el miembro del equipo */
+  padding-top:60px;
 }
 .member-thumb {
   width: 273px;
@@ -523,11 +533,18 @@ top: -8px;
 
 .team-member h4 {
   color: #16558C;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
   line-height: 24px;
   margin: 15px 0 8px;
   
+  
+}
+
+.team-member .member-thumb img {
+  width: 400px; /* Establece el ancho deseado */
+  height: 500px; /* Establece la altura deseada */
+  object-fit: cover; /* Ajusta la imagen para que cubra el contenedor manteniendo la relación de aspecto */
 }
 
 .member-thumb:hover .overlay {
