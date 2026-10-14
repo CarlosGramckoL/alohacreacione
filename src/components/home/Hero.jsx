@@ -49,7 +49,8 @@ export function Hero() {
 
   return (
     <section className="relative overflow-hidden bg-pink-tint">
-      <div className="grid lg:grid-cols-[0.95fr_1.05fr]">
+      <div className="mx-auto w-full max-w-[1440px]">
+        <div className="grid lg:grid-cols-[0.95fr_1.05fr]">
         <div className="order-2 flex flex-col justify-center lg:order-1">
           <Container className="py-5 sm:py-12 lg:py-24">
             <span className="inline-flex items-center gap-2 rounded-full border-2 border-ink bg-white px-3.5 py-1.5 text-[12px] font-extrabold uppercase tracking-[0.14em] text-ink sm:px-4 sm:py-2 sm:text-[13px]">
@@ -181,6 +182,7 @@ export function Hero() {
               </div>
             </div>
           </div>
+        </div>
         </div>
       </div>
     </section>
