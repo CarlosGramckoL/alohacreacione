@@ -5,22 +5,39 @@ import { join } from 'node:path'
 const IMG = 'src/assets/img'
 const WORKS = `${IMG}/works`
 const PUBLIC = 'public'
+const FAVICON = `${PUBLIC}/newfavicon.png`
+
+const TRANSPARENT = { r: 0, g: 0, b: 0, alpha: 0 }
+const WHITE = { r: 255, g: 255, b: 255, alpha: 1 }
 
 await mkdir(PUBLIC, { recursive: true })
 await mkdir(`${PUBLIC}/og`, { recursive: true })
 
-const logoOnWhite = (size) =>
-  sharp(`${IMG}/logo.png`)
-    .resize(size, size, {
-      fit: 'contain',
-      background: { r: 255, g: 255, b: 255, alpha: 1 },
+async function writeIcon(size, background, dest) {
+  const inner = Math.round(size * (size <= 48 ? 0.96 : 0.84))
+  const resized = await sharp(FAVICON)
+    .resize(inner, inner, { fit: 'contain', background })
+    .png()
+    .toBuffer()
+  const { width, height } = await sharp(resized).metadata()
+  const padX = Math.round((size - width) / 2)
+  const padY = Math.round((size - height) / 2)
+  await sharp(resized)
+    .extend({
+      top: padY,
+      bottom: size - height - padY,
+      left: padX,
+      right: size - width - padX,
+      background,
     })
     .png({ compressionLevel: 9 })
+    .toFile(dest)
+}
 
-await logoOnWhite(180).toFile(`${PUBLIC}/apple-touch-icon.png`)
-await logoOnWhite(192).toFile(`${PUBLIC}/icon-192.png`)
-await logoOnWhite(512).toFile(`${PUBLIC}/icon-512.png`)
-await logoOnWhite(32).toFile(`${PUBLIC}/favicon-32.png`)
+await writeIcon(180, WHITE, `${PUBLIC}/apple-touch-icon.png`)
+await writeIcon(192, TRANSPARENT, `${PUBLIC}/icon-192.png`)
+await writeIcon(512, TRANSPARENT, `${PUBLIC}/icon-512.png`)
+await writeIcon(32, TRANSPARENT, `${PUBLIC}/favicon-32.png`)
 
 const og = (src, dest) =>
   sharp(src)
@@ -71,4 +88,4 @@ await og(await firstImage(`${WORKS}/decoration/babyshower`), `${PUBLIC}/og/decor
 await og(await firstImage(`${WORKS}/table-decoration`), `${PUBLIC}/og/table-decorations.jpg`)
 await og(`${IMG}/banner.webp`, `${PUBLIC}/og/home.jpg`)
 
-console.log('Generated icons + 20 OG images in public/og/')
+console.log('Generated icons (from newfavicon.png) + 20 OG images in public/og/')
